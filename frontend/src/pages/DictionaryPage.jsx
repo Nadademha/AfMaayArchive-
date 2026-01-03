@@ -207,13 +207,14 @@ const AddWordDialog = ({ onWordAdded }) => {
             <div className="space-y-2">
               <Label>Sound Group</Label>
               <Select 
-                value={formData.sound_group} 
-                onValueChange={(v) => setFormData({ ...formData, sound_group: v })}
+                value={formData.sound_group || "none"} 
+                onValueChange={(v) => setFormData({ ...formData, sound_group: v === "none" ? "" : v })}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="none">Not specified</SelectItem>
                   <SelectItem value="k">K Group</SelectItem>
                   <SelectItem value="t">T Group</SelectItem>
                   <SelectItem value="dh">DH Group</SelectItem>
