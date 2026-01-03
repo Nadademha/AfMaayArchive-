@@ -1,0 +1,149 @@
+{
+  "identity": {
+    "name": "E1",
+    "archetype": "The Anti-AI Designer",
+    "mission": "Create a voice-first, culturally grounded, and accessible platform for Af Maay speakers.",
+    "principles": [
+      "Fusion over Imitation: Mix Somali oral tradition warmth with Swiss functional precision.",
+      "Emotion First: Every interaction should feel welcoming and empowering, not clinical.",
+      "Content is King: The voice is the content. Visuals support, never distract.",
+      "Zoom In: Focus on the 'Tap to Talk' moment. It is the heartbeat of the app.",
+      "Negative Space: Essential for low-literacy users to reduce cognitive load."
+    ]
+  },
+  "design_system": {
+    "theme_strategy": "Organic & Earthy (Primary) + High Contrast (Accessibility)",
+    "colors": {
+      "palette_name": "Somali Coast & Earth",
+      "light_mode": {
+        "background": "#F4F1DE",
+        "foreground": "#2D3142",
+        "primary": "#E07A5F",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#3D5A80",
+        "secondary_foreground": "#FFFFFF",
+        "muted": "#EAE6D6",
+        "muted_foreground": "#666A7A",
+        "accent": "#81B29A",
+        "border": "#D4D0BA"
+      },
+      "dark_mode": {
+        "background": "#1A1B26",
+        "foreground": "#E0E1E6",
+        "primary": "#E07A5F",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#89C2D9",
+        "secondary_foreground": "#1A1B26",
+        "muted": "#24283B",
+        "muted_foreground": "#A9B1D6",
+        "accent": "#414868",
+        "border": "#414868"
+      },
+      "usage_rules": [
+        "Never use gradients for text.",
+        "Primary color (#E07A5F) is ONLY for the main 'Talk' action and primary CTAs.",
+        "Use High Contrast borders (2px) for all interactive elements to aid visibility."
+      ]
+    },
+    "typography": {
+      "font_family_headings": "Epilogue, sans-serif",
+      "font_family_body": "Manrope, sans-serif",
+      "scale": {
+        "h1": "text-4xl md:text-6xl font-bold tracking-tight",
+        "h2": "text-3xl md:text-4xl font-semibold tracking-tight",
+        "h3": "text-2xl font-semibold",
+        "body_large": "text-lg md:text-xl leading-relaxed",
+        "body_default": "text-base leading-relaxed",
+        "caption": "text-sm font-medium tracking-wide uppercase"
+      },
+      "rules": [
+        "Headings must be bold and earthy.",
+        "Body text must be high-contrast for readability.",
+        "Avoid thin weights (light/extralight) entirely."
+      ]
+    },
+    "spacing": {
+      "scale": "Generous (Tailwind p-6, p-8, p-12)",
+      "container_padding": "p-6 md:p-12",
+      "grid_gap": "gap-6 md:gap-8",
+      "rules": [
+        "Touch targets must be at least 48px x 48px.",
+        "Spacing between sections should be at least 80px (py-20)."
+      ]
+    },
+    "visual_enhancers": {
+      "borders": "Rounded-xl or Rounded-2xl. 2px solid border for better definition.",
+      "shadows": "Hard shadows (shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]) for a tactile feel.",
+      "textures": "Subtle grain overlay on backgrounds to reduce digital harshness.",
+      "glassmorphism": "Use sparingly. Only for sticky navs. High blur (backdrop-blur-xl), distinct border."
+    },
+    "motion": {
+      "speed": "Slow and deliberate (0.3s - 0.5s)",
+      "easing": "ease-out",
+      "types": [
+        "Pulse animation for the 'Talk' button (essential for affordance).",
+        "Slide-up for results.",
+        "Waveform visualization for voice input."
+      ],
+      "accessibility": "Respect prefers-reduced-motion."
+    }
+  },
+  "components": {
+    "voice_button": {
+      "description": "The central interaction point. A massive, circular or pill-shaped button.",
+      "style": "h-32 w-32 md:h-48 md:w-48 rounded-full bg-primary text-white shadow-xl hover:scale-105 transition-transform",
+      "icon": "Microphone (Large)",
+      "animation": "Pulse ring when active."
+    },
+    "cards": {
+      "style": "bg-card text-card-foreground border-2 border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow",
+      "usage": "Dictionary entries, translation results."
+    },
+    "inputs": {
+      "style": "h-14 bg-background border-2 border-input rounded-lg px-4 text-lg focus:ring-2 focus:ring-primary focus:border-primary",
+      "usage": "Search bars, text fallbacks."
+    }
+  },
+  "layouts": {
+    "marketing": "Asymmetric 'Tetris' grid. Large hero image, offset text. Use texture.",
+    "app": "Voice-first layout. Bottom-heavy controls (thumb zone). Minimal top nav.",
+    "dashboard": "Clean, high-contrast grid. 'Control Room' style but with softer edges."
+  },
+  "assets": {
+    "icons_library": "lucide-react",
+    "image_urls": {
+      "hero_background": "https://images.unsplash.com/photo-1659861264333-99bb8142fc17?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "texture_pattern": "https://images.unsplash.com/photo-1614619838981-a5d41d4dda42?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "community_1": "https://images.unsplash.com/photo-1744040866609-2b8952159e1e?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "community_2": "https://images.unsplash.com/photo-1623035792727-61da15e1a383?crop=entropy&cs=srgb&fm=jpg&q=85",
+      "cultural_accent": "https://images.unsplash.com/photo-1702590446248-f8f96ed17f13?crop=entropy&cs=srgb&fm=jpg&q=85"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Implement the 'Organic & Earthy' theme immediately in tailwind.config.js.",
+    "Install 'Epilogue' and 'Manrope' fonts via Google Fonts.",
+    "Create a custom 'VoiceInput' component that dominates the screen when active.",
+    "Ensure all text has high contrast ratios (AA standard).",
+    "Use the provided image URLs for the landing page and authentication screens.",
+    "Do not use generic gradients. Use the solid colors defined in the palette.",
+    "For the 'Tap to Talk' button, ensure it occupies at least 30-40% of the mobile viewport height in the main interaction mode."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. This results in breaking transforms.",
+    "You MUST NOT center align the app container.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations.",
+    "NEVER use AI assistant Emoji characters.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations: separates good from extraordinary.",
+    "Main agent relies on these image URLs. Missing categories = main agent will use placeholder text which is FORBIDDEN.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Components MUST use named exports.",
+    "Pages MUST use default exports.",
+    "Use sonner for toasts."
+  ]
+}
