@@ -399,12 +399,12 @@ export default function DictionaryPage() {
               </SelectContent>
             </Select>
 
-            <Select value={soundGroupFilter} onValueChange={setSoundGroupFilter}>
+            <Select value={soundGroupFilter || "all"} onValueChange={(v) => setSoundGroupFilter(v === "all" ? "" : v)}>
               <SelectTrigger className="w-36">
                 <SelectValue placeholder="Sound Group" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Groups</SelectItem>
+                <SelectItem value="all">All Groups</SelectItem>
                 <SelectItem value="k">K Group</SelectItem>
                 <SelectItem value="t">T Group</SelectItem>
                 <SelectItem value="dh">DH Group</SelectItem>
