@@ -629,7 +629,7 @@ async def transcribe_audio(file: UploadFile = File(...)):
 @api_router.post("/voice/synthesize")
 async def synthesize_speech(request: Request):
     """Synthesize text to speech"""
-    from openai import AsyncOpenAI
+    from emergentintegrations.llm.openai import OpenAITextToSpeech
     
     body = await request.json()
     text = body.get("text", "")
@@ -641,19 +641,13 @@ async def synthesize_speech(request: Request):
     api_key = os.environ.get("EMERGENT_LLM_KEY")
     
     try:
-        client = AsyncOpenAI(api_key=api_key)
+        tts = OpenAITextToSpeech(api_key=api_key)
         
-        response = await client.audio.speech.create(
+        audio_base64 = await tts.generate_speech_base64(
+            text=text,
             model="tts-1",
-            voice=voice,
-            input=text
+            voice=voice
         )
-        
-        # Get audio bytes
-        audio_content = response.content
-        
-        # Return as base64
-        audio_base64 = base64.b64encode(audio_content).decode('utf-8')
         
         return {"audio": audio_base64, "format": "mp3"}
     except Exception as e:
