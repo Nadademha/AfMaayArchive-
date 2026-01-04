@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { useState, useEffect, useRef, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import { Toaster } from "./components/ui/sonner";
 import axios from "axios";
 
@@ -10,6 +10,8 @@ import TranslatePage from "./pages/TranslatePage";
 import ConversationPage from "./pages/ConversationPage";
 import AdminPage from "./pages/AdminPage";
 import AuthCallback from "./pages/AuthCallback";
+import LoginPage from "./pages/LoginPage";
+import DonatePage from "./pages/DonatePage";
 
 // Context
 const AuthContext = createContext(null);
@@ -42,7 +44,6 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
     const redirectUrl = window.location.origin + '/auth/callback';
     window.location.href = `https://auth.emergentagent.com/?redirect=${encodeURIComponent(redirectUrl)}`;
   };
@@ -81,7 +82,7 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
   }
 
   if (!user) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   if (adminOnly && !user.is_admin) {
@@ -106,6 +107,8 @@ function AppRouter() {
       <Route path="/dictionary" element={<DictionaryPage />} />
       <Route path="/translate" element={<TranslatePage />} />
       <Route path="/conversation" element={<ConversationPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/donate" element={<DonatePage />} />
       <Route path="/auth/callback" element={<AuthCallback />} />
       <Route
         path="/admin"
@@ -125,8 +128,7 @@ function App() {
       <AuthProvider>
         <div className="min-h-screen bg-background font-body">
           <AppRouter />
-          <Toaster position="bottom-right" richColors />
-          <div className="grain-overlay" />
+          <Toaster position="bottom-right" richColors theme="dark" />
         </div>
       </AuthProvider>
     </BrowserRouter>
