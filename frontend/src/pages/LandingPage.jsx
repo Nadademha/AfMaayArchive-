@@ -171,7 +171,7 @@ export default function LandingPage() {
               <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
                 <span className="text-white font-heading font-bold text-xl">M</span>
               </div>
-              <span className="font-heading font-bold text-xl">At Maay</span>
+              <span className="font-heading font-bold text-xl">Et Maay</span>
             </div>
 
             {/* Desktop Nav */}
