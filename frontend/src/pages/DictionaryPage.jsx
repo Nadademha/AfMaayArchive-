@@ -1,106 +1,146 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Search, Volume2, Book, Mic, ArrowLeft, Check } from "lucide-react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Card } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
-import { toast } from "sonner";
+[
+  {
+    "maay": "aam",
+    "english": "eat (primary root for conjugation)",
+    "category": "verb",
+    "examples": [
+      {"sentence": "ani aame", "translation": "I eat"},
+      {"sentence": "ani aami", "translation": "I ate"}
+    ],
+    "notes": "Alternates with 'aang' in commands and some past forms."
+  },
+  {
+    "maay": "aang",
+    "english": "eat (alternate root/command form)",
+    "category": "verb",
+    "examples": [
+      {"sentence": "aang!", "translation": "eat! (command)"},
+      {"sentence": "athi aangteey", "translation": "you ate"}
+    ],
+    "notes": "Used in imperatives and certain past tenses."
+  },
+  {
+    "maay": "anduunya",
+    "english": "earth/world",
+    "category": "noun",
+    "examples": [
+      {"sentence": "Anduunya thi ma yarto.", "translation": "The earth is not small."}
+    ],
+    "notes": ""
+  },
+  {
+    "maay": "baabur",
+    "english": "car",
+    "category": "noun",
+    "examples": [
+      {"sentence": "Babur key la suubi yi", "translation": "My car was fixed"}
+    ],
+    "notes": "Synonym: gaari (vehicle)"
+  },
+  {
+    "maay": "roon",
+    "english": "be good/fine (state verb)",
+    "category": "verb",
+    "examples": [
+      {"sentence": "ani roonye", "translation": "I am good"},
+      {"sentence": "athi roonte", "translation": "you are good"}
+    ],
+    "notes": "Conjugates as a state verb, no copula needed."
+  },
+  {
+    "maay": "hundur",
+    "english": "sleep",
+    "category": "verb",
+    "examples": [
+      {"sentence": "ani hunduroye", "translation": "I sleep"},
+      {"sentence": "ani hunduri", "translation": "I slept"}
+    ],
+    "notes": "Uses progressive -oy- pattern."
+  },
+  {
+    "maay": "-aase / -ase",
+    "english": "question/affirmative suffix (will you...? / you will...)",
+    "category": "suffix",
+    "examples": [
+      {"sentence": "Badi sa aragaase?", "translation": "Will you see the ocean?"}
+    ],
+    "notes": "Short form (-ase) if root elongated. Family includes sound harmony variants (yaase, haase, etc.)."
+  },
+  {
+    "maay": "may",
+    "english": "what",
+    "category": "particle",
+    "examples": [
+      {"sentence": "May weel fadi?", "translation": "What would you have done?"}
+    ],
+    "notes": ""
+  },
+  {
+    "maay": "si theew",
+    "english": "hello / how are you?",
+    "category": "greeting",
+    "examples": [],
+    "notes": "General greeting."
+  }
+  // ... (full array continues with all extracted entries: verbs like dhang, kooy, arak; nouns like gewer, moos, biyo; adjectives like moony, yariis; particles like ka, ila, le; full suffix families; greetings; etc.)
+]
+import React, { useState, useMemo } from 'react';
+import dictionaryData from './dictionary.json'; // Place JSON in same folder or adjust path
 
-// Import static dictionary data
-import dictionaryData from '../dictionary-data.json';
+const DictionaryPage = () => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-// Sound Group Badge Colors
-const soundGroupColors = {
-  k: "bg-orange-900/30 text-orange-400 border-orange-500/50",
-  t: "bg-blue-900/30 text-blue-400 border-blue-500/50",
-  th: "bg-green-900/30 text-green-400 border-green-500/50",
-  dh: "bg-green-900/30 text-green-400 border-green-500/50",
-  n: "bg-yellow-900/30 text-yellow-400 border-yellow-500/50",
-  g: "bg-yellow-900/30 text-yellow-400 border-yellow-500/50",
-  b: "bg-purple-900/30 text-purple-400 border-purple-500/50",
-  r: "bg-red-900/30 text-red-400 border-red-500/50",
-  l: "bg-purple-900/30 text-purple-400 border-purple-500/50",
-  m: "bg-pink-900/30 text-pink-400 border-pink-500/50",
-  y: "bg-cyan-900/30 text-cyan-400 border-cyan-500/50",
-  h: "bg-indigo-900/30 text-indigo-400 border-indigo-500/50"
-};
-
-// Dictionary Entry Card
-const DictionaryCard = ({ entry }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const playAudio = async () => {
-    // Voice feature - needs API setup
-    toast.info("Voice feature coming soon! Set up OpenAI API to enable.", {
-      description: "Check README.md for setup instructions"
-    });
-    
-    /* 
-    // ENABLE THIS WHEN YOU ADD API:
-    if (isPlaying) return;
-    setIsPlaying(true);
-    
-    try {
-      const response = await axios.post(`${API}/voice/synthesize`, {
-        text: entry.maay_word,
-        voice: "nova"
-      });
-      
-      if (response.data.audio) {
-        const audio = new Audio(`data:audio/mp3;base64,${response.data.audio}`);
-        audio.onended = () => setIsPlaying(false);
-        audio.onerror = () => setIsPlaying(false);
-        audio.play();
-      }
-    } catch (error) {
-      toast.error("Could not play audio");
-      setIsPlaying(false);
-    }
-    */
-  };
+  const filteredEntries = useMemo(() => {
+    if (!searchTerm) return dictionaryData;
+    const lowerTerm = searchTerm.toLowerCase();
+    return dictionaryData.filter(entry =>
+      entry.maay.toLowerCase().includes(lowerTerm) ||
+      entry.english.toLowerCase().includes(lowerTerm) ||
+      (entry.notes && entry.notes.toLowerCase().includes(lowerTerm))
+    );
+  }, [searchTerm]);
 
   return (
-    <Card 
-      data-testid={`dict-entry-${entry.entry_id}`}
-      className="p-5 border-2 border-border rounded-xl hover:border-primary/50 transition-colors duration-300 card-glow"
-    >
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-2">
-            <h3 className="font-heading font-semibold text-lg truncate text-primary">
-              {entry.maay_word}
-            </h3>
-            <button
-              onClick={playAudio}
-              disabled={isPlaying}
-              className={`p-1.5 rounded-full hover:bg-primary/10 text-primary transition-colors ${isPlaying ? 'animate-pulse' : ''}`}
-              aria-label="Play pronunciation"
-              title="Voice synthesis (needs API setup)"
-            >
-              <Volume2 className="w-4 h-4" />
-            </button>
-          </div>
-          
-          <p className="text-foreground mb-3">{entry.english_translation}</p>
-          
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary" className="text-xs bg-secondary">
-              {entry.part_of_speech}
-            </Badge>
-            {entry.sound_group && (
-              <Badge className={`text-xs border ${soundGroupColors[entry.sound_group] || 'border-border'}`}>
-                {entry.sound_group} group
-              </Badge>
-            )}
-            {entry.is_verified && (
-              <Badge className="bg-green-900/30 text-green-400 border border-green-500/50 text-xs">
-                <Check className="w-3 h-3 mr-1" />
-                Verified
-              </Badge>
-            )}
-          </div>
-          
-          {(entry.example_maay || entry.example_english) && (
-            <div className="mt-4 pt-4 border-t border
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Af Maay Dictionary</h1>
+      <input
+        type="text"
+        placeholder="Search Af Maay or English..."
+        className="w-full p-4 mb-8 border rounded-lg text-lg"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        autoFocus
+      />
+      <div className="space-y-6">
+        {filteredEntries.length === 0 ? (
+          <p>No matching entries found.</p>
+        ) : (
+          filteredEntries.map((entry, index) => (
+            <div key={index} className="border-b pb-4">
+              <div className="flex justify-between">
+                <strong className="text-xl">{entry.maay}</strong>
+                <span className="text-gray-600 italic">{entry.category}</span>
+              </div>
+              <p className="mt-2 text-lg">{entry.english}</p>
+              {entry.notes && <p className="mt-2 text-sm text-gray-700">Notes: {entry.notes}</p>}
+              {entry.examples.length > 0 && (
+                <ul className="mt-3 list-disc pl-6">
+                  {entry.examples.map((ex, i) => (
+                    <li key={i}>
+                      <em>{ex.sentence}</em> — {ex.translation}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))
+        )}
+      </div>
+      <p className="mt-8 text-center text-gray-500">
+        {dictionaryData.length} entries • Fully static & offline-capable
+      </p>
+    </div>
+  );
+};
+
+export default DictionaryPage;
